@@ -3,10 +3,10 @@ on:
     push:
         branches:
             - main
-        paths:
-            - 'module-user-api/**'
-            - 'module-admin-api/**'
-            - 'module-common/**'
+#        paths:
+#            - 'module-user-api/**'
+#            - 'module-admin-api/**'
+#            - 'module-common/**'
 permissions:
     checks: write
 jobs:
