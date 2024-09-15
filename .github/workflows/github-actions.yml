@@ -42,14 +42,14 @@ jobs:
                     for file in ${ALL_CHANGED_FILES}; do
                         echo "$file was changed"
                         if [[ $file == *"module-common"* ]]; then
-                            echo "true" >> $COMMON_CHANGED
+                            echo "true" >> COMMON_CHANGED
                             break
                         elif [[ $file == *"module-user-api"* ]]; then
-                            echo "true" >> $USER_API_CHANGED
+                            echo "true" >> USER_API_CHANGED
                         elif [[ $file == *"module-admin-api"* ]]; then
-                            echo "true" >> $ADMIN_API_CHANGED
+                            echo "true" >> ADMIN_API_CHANGED
                         else
-                            echo "true" >> $COMMON_CHANGED
+                            echo "true" >> COMMON_CHANGED
                             break
                         fi
                     done
