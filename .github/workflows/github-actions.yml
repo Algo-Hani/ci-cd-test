@@ -105,12 +105,26 @@ jobs:
                     username: ${{ secrets.DOCKER_USERNAME }}
                     password: ${{ secrets.DOCKER_PASSWORD }}
 
+            -   name: docker image build
+                run: |
+                    if [[ $USER_API_CHANGED == "true" ]]; then
+                        cd module-user-api
+                        docker buildx build --platform linux/amd64, linux/arm64 -t potatowoong/algopuni:user-api .
+                        cd ..
+                    fi
+
+                    if [[ $ADMIN_API_CHANGED == "true" ]]; then
+                        cd module-admin-api
+                        docker buildx build --platform linux/amd64, linux/arm64 -t potatowoong/algopuni:admin-api .
+                        cd ..
+                    fi
+
+
             -   name: user docker build and push
                 uses: docker/build-push-action@v4
                 if: steps.echo-changed-files.outputs.user-api-changed == 'true'
                 with:
-                    context: module-user-api
-                    file: Dockerfile
+                    file: module-user-api/Dockerfile
                     push: true
                     tags: potatowoong/algopuni:user-api
                     platforms: |
@@ -121,8 +135,7 @@ jobs:
                 uses: docker/build-push-action@v4
                 if: steps.echo-changed-files.outputs.admin-api-changed == 'true'
                 with:
-                    context: module-admin-api
-                    file: Dockerfile
+                    file: module-admin-api/Dockerfile
                     push: true
                     tags: potatowoong/algopuni:admin-api
                     platforms: |
