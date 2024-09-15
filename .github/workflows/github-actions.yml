@@ -31,10 +31,10 @@ jobs:
                 run: |
                     echo $(git diff --name-only HEAD^ HEAD)
 
-                    if git diff --name-only HEAD^ HEAD | grep -q '^common/'; then
-                       echo "common change"
-                       echo $(git diff --name-only HEAD^ HEAD)
-                    fi
+            #                    if git diff --name-only HEAD^ HEAD | grep -q '^common/'; then
+            #                       echo "common change"
+            #                       echo $(git diff --name-only HEAD^ HEAD)
+            #                    fi
             #                    echo $(git diff --name-only HEAD^ HEAD)
             #                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-user-api" ]]; then
             #                        cd module-user-api
