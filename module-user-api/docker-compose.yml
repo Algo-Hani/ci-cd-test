@@ -1,5 +1,5 @@
 services:
-    admin-api:
+    user-api:
         container_name: user-api
         image: potatowoong/algohani:user-api
         ports:

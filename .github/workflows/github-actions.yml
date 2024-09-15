@@ -157,3 +157,17 @@ jobs:
                     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_IAM_ACCESS_KEY }}
                     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_IAM_SECRET_ACCESS_KEY }}
                     AWS_DEFAULT_REGION: ap-northeast-2
+
+            -   name: User Discord Webhook Action
+                uses: tsickert/discord-webhook@v5.3.0
+                if: needs.build.outputs.user_api_changed == 'true'
+                with:
+                    webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+                    content: "사용자 API 배포 완료"
+
+            -   name: Admin Discord Webhook Action
+                uses: tsickert/discord-webhook@v5.3.0
+                if: needs.build.outputs.admin_api_changed == 'true'
+                with:
+                    webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+                    content: "관리자 API 배포 완료"
