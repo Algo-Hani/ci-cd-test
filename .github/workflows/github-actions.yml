@@ -47,13 +47,17 @@ jobs:
                         echo "$file was changed"
                         if [[ $file == *"module-common"* ]]; then
                             echo "true" >> COMMON_CHANGED
+                            echo "common-changed"
                             break
                         elif [[ $file == *"module-user-api"* ]]; then
                             echo "true" >> USER_API_CHANGED
+                            echo "user-api-changed"
                         elif [[ $file == *"module-admin-api"* ]]; then
                             echo "true" >> ADMIN_API_CHANGED
+                            echo "admin-api-changed"
                         else
                             echo "true" >> COMMON_CHANGED
+                            echo "common-changed!!"
                             break
                         fi
                     done
