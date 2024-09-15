@@ -29,6 +29,8 @@ jobs:
 
             -   name: Build And Test
                 run: |
+                    echo $(git diff --name-only HEAD^ HEAD)
+
                     if git diff --name-only HEAD^ HEAD | grep -q '^common/'; then
                        echo "common change"
                        echo $(git diff --name-only HEAD^ HEAD)
