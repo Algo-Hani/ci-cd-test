@@ -39,6 +39,10 @@ jobs:
                 env:
                     ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
                 run: |
+                    COMMON_CHANGED=false
+                    USER_API_CHANGED=false
+                    ADMIN_API_CHANGED=false
+                    
                     for file in ${ALL_CHANGED_FILES}; do
                         echo "$file was changed"
                         if [[ $file == *"module-common"* ]]; then
