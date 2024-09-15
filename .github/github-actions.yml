@@ -1,0 +1,63 @@
+name: algopuni-ci/cd
+on:
+    push:
+        branches:
+            - main
+permissions:
+    checks: write
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout Code
+                uses: actions/checkout@v4
+
+            -   name: Set up JDK 17
+                uses: actions/setup-java@v4
+                with:
+                    java-version: '17'
+                    distribution: 'temurin'
+                    cache: gradle
+
+            -   name: Verify JDK installation
+                run: java -version
+
+            -   name: Set up Gradle
+                uses: gradle/actions/setup-gradle@v3
+                with:
+                    gradle-version: '8.10'
+
+            -   name: Build And Test
+                run: |
+                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-user-api" ]]; then
+                        cd module-user-api
+                        ./gradlew clean build
+                    fi
+                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-admin-api" ]]; then
+                        cd module-admin-api
+                        ./gradlew clean build
+                    fi
+
+            -   name: docker image build
+                run: |
+                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-user-api" ]]; then
+                        docker build -t potatowoong/algopuni:user-api .
+                    fi
+                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-admin-api" ]]; then
+                        docker build -t potatowoong/algopuni:admin-api .
+                    fi
+
+            -   name: docker login
+                uses: docker/login-action@v2
+                with:
+                    username: ${{ secrets.DOCKER_USERNAME }}
+                    password: ${{ secrets.DOCKER_PASSWORD }}
+
+            -   name: docker push
+                run: |
+                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-user-api" ]]; then
+                        docker push ${{ secrets.DOCKER_USERNAME }}/algopuni:user-api
+                    fi
+                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-admin-api" ]]; then
+                        docker push ${{ secrets.DOCKER_USERNAME }}/algopuni:admin-api
+                    fi
