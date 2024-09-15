@@ -3,10 +3,6 @@ on:
     push:
         branches:
             - main
-#        paths:
-#            - 'module-user-api/**'
-#            - 'module-admin-api/**'
-#            - 'module-common/**'
 permissions:
     checks: write
 jobs:
@@ -159,15 +155,29 @@ jobs:
                     AWS_DEFAULT_REGION: ap-northeast-2
 
             -   name: User Discord Webhook Action
-                uses: tsickert/discord-webhook@v5.3.0
+                uses: sarisia/actions-status-discord@v1
                 if: needs.build.outputs.user_api_changed == 'true'
                 with:
-                    webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-                    content: "사용자 API 배포 완료"
+                    webhook: ${{ secrets.DISCORD_WEBHOOK }}
+                    title: "Algopuni User API Deployed"
 
             -   name: Admin Discord Webhook Action
-                uses: tsickert/discord-webhook@v5.3.0
+                uses: sarisia/actions-status-discord@v1
                 if: needs.build.outputs.admin_api_changed == 'true'
                 with:
-                    webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-                    content: "관리자 API 배포 완료"
+                    webhook: ${{ secrets.DISCORD_WEBHOOK }}
+                    title: "Algopuni Admin API Deployed"
+
+#            -   name: User Discord Webhook Action
+#                uses: tsickert/discord-webhook@v5.3.0
+#                if: needs.build.outputs.user_api_changed == 'true'
+#                with:
+#                    webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+#                    content: "사용자 API 배포 완료"
+#
+#            -   name: Admin Discord Webhook Action
+#                uses: tsickert/discord-webhook@v5.3.0
+#                if: needs.build.outputs.admin_api_changed == 'true'
+#                with:
+#                    webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+#                    content: "관리자 API 배포 완료"
