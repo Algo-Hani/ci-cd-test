@@ -42,23 +42,21 @@ jobs:
                     for file in ${ALL_CHANGED_FILES}; do
                         echo "$file was changed"
                         if [[ $file == *"module-common"* ]]; then
-                            echo "common=true" >> $GITHUB_ENV
+                            echo "true" >> $COMMON_CHANGED
                             break
                         elif [[ $file == *"module-user-api"* ]]; then
-                            echo "user=true" >> $GITHUB_ENV
+                            echo "true" >> $USER_API_CHANGED
                         elif [[ $file == *"module-admin-api"* ]]; then
-                            echo "admin=true" >> $GITHUB_ENV
+                            echo "true" >> $ADMIN_API_CHANGED
                         else
-                            echo "common=true" >> $GITHUB_ENV
-                            echo "user=true" >> $GITHUB_ENV
-                            echo "admin=true" >> $GITHUB_ENV
+                            echo "true" >> $COMMON_CHANGED
                             break
                         fi
                     done
                     
-                    echo "common-changed : $common"
-                    echo "user-api-changed : $user"
-                    echo "admin-api-changed : $admin"
+                    echo "common-changed : $COMMON_CHANGED"
+                    echo "user-api-changed : $USER_API_CHANGED"
+                    echo "admin-api-changed : $ADMIN_API_CHANGED"
 
 
             -   name: Fetch Base Branch
