@@ -101,7 +101,7 @@ jobs:
 
             -   name: user docker build and push
                 uses: docker/build-push-action@v4
-                if: USER_API_CHANGED == 'true'
+                if: needs.build.outputs.user_api_changed == 'true'
                 with:
                     file: module-user-api/Dockerfile
                     push: true
@@ -113,7 +113,7 @@ jobs:
 
             -   name: admin docker build and push
                 uses: docker/build-push-action@v4
-                if: ADMIN_API_CHANGED == 'true'
+                if: needs.build.outputs.admin_api_changed
                 with:
                     file: module-admin-api/Dockerfile
                     push: true
