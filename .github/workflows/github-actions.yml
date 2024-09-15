@@ -82,7 +82,7 @@ jobs:
                 uses: docker/setup-buildx-action@v3
 
             -   name: docker login
-                uses: docker/login-action@v2
+                uses: docker/login-action@v3
                 with:
                     username: ${{ secrets.DOCKER_USERNAME }}
                     password: ${{ secrets.DOCKER_PASSWORD }}
@@ -160,6 +160,7 @@ jobs:
                 with:
                     webhook: ${{ secrets.DISCORD_WEBHOOK }}
                     title: "Algopuni User API Deployed"
+                    avatar_url: ${{ secrets.DISCORD_AVATAR_URL }}
 
             -   name: Admin Discord Webhook Action
                 uses: sarisia/actions-status-discord@v1
@@ -167,17 +168,4 @@ jobs:
                 with:
                     webhook: ${{ secrets.DISCORD_WEBHOOK }}
                     title: "Algopuni Admin API Deployed"
-
-#            -   name: User Discord Webhook Action
-#                uses: tsickert/discord-webhook@v5.3.0
-#                if: needs.build.outputs.user_api_changed == 'true'
-#                with:
-#                    webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-#                    content: "사용자 API 배포 완료"
-#
-#            -   name: Admin Discord Webhook Action
-#                uses: tsickert/discord-webhook@v5.3.0
-#                if: needs.build.outputs.admin_api_changed == 'true'
-#                with:
-#                    webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-#                    content: "관리자 API 배포 완료"
+                    avatar_url: ${{ secrets.DISCORD_AVATAR_URL }}
