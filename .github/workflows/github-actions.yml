@@ -39,8 +39,8 @@ jobs:
                     BASE_SHA=$(git rev-parse origin/main)
                     echo "$BASE_SHA"
                     MODIFIED_FILES=$(git diff --name-only $BASE_SHA ${{ github.sha }} | tr '\n' ' ')
-                    echo "MODIFIED_FILES=$MODIFIED_FILES" >> $GITHUB_ENV
                     echo "$MODIFIED_FILES"
+                    echo "MODIFIED_FILES=$MODIFIED_FILES" >> $GITHUB_ENV
                     echo "123"
 
             -   name: Build And Test
