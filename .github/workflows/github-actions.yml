@@ -62,6 +62,8 @@ jobs:
                 run: |
                     echo "user-api-changed : $USER_API_CHANGED"
                     echo "admin-api-changed : $ADMIN_API_CHANGED"
+                    echo "::set-output name=USER_API_CHANGED::$USER_API_CHANGED"
+                    echo "::set-output name=ADMIN_API_CHANGED::$ADMIN_API_CHANGED"
 
             -   name: Build And Test
                 run: |
@@ -129,14 +131,17 @@ jobs:
                     username: ${{ secrets.AWS_EC2_USERNAME }}
                     key: ${{ secrets.AWS_EC2_SSH_KEY }}
                     script: |
-                        if [[ $USER_API_CHANGED == "true" ]]; then
+                        echo "USER_API_CHANGED=${{ needs.set-vars.outputs.USER_API_CHANGED }}" >> ~/.bashrc
+                        echo "ADMIN_API_CHANGED=${{ needs.set-vars.outputs.ADMIN_API_CHANGED }}" >> ~/.bashrc
+                        
+                        if [[ "$USER_API_CHANGED" == "true" ]]; then
                             cd /algopuni/user-api
                             docker-compose down
                             docker-compose pull
                             docker-compose up -d
                         fi
                         
-                        if [[ $ADMIN_API_CHANGED == "true" ]]; then
+                        if [[ "$ADMIN_API_CHANGED" == "true" ]]; then
                              cd /algopuni/admin-api
                             docker-compose down
                             docker-compose pull
