@@ -64,52 +64,55 @@ jobs:
 
 
             -   name: Fetch Base Branch
-                run: git fetch origin +refs/heads/main:refs/remotes/origin/main
-
-            -   name: Get Modified Files
                 run: |
-                    BASE_SHA=$(git rev-parse origin/main)
-                    echo "$BASE_SHA"
-                    MODIFIED_FILES=$(git diff --name-only $BASE_SHA ${{ github.sha }} | tr '\n' ' ')
-                    echo "$MODIFIED_FILES"
-                    echo "MODIFIED_FILES=$MODIFIED_FILES" >> $GITHUB_ENV
-                    echo "123"
-
-            -   name: Build And Test
-                run: |
-                    if [[ $(git diff --name-only HEAD^ HEAD) =~ ^module-common/ ]]; then
-                      echo "common change"
-                    fi
-            #                    echo $(git diff --name-only HEAD^ HEAD)
-            #                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-user-api" ]]; then
-            #                        cd module-user-api
-            #                        ./gradlew clean build
-            #                    fi
-            #                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-admin-api" ]]; then
-            #                        cd module-admin-api
-            #                        ./gradlew clean build
-            #                    fi
-
-            -   name: docker image build
-                run: |
-                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-user-api" ]]; then
-                        docker build -t potatowoong/algopuni:user-api .
-                    fi
-                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-admin-api" ]]; then
-                        docker build -t potatowoong/algopuni:admin-api .
-                    fi
-
-            -   name: docker login
-                uses: docker/login-action@v2
-                with:
-                    username: ${{ secrets.DOCKER_USERNAME }}
-                    password: ${{ secrets.DOCKER_PASSWORD }}
-
-            -   name: docker push
-                run: |
-                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-user-api" ]]; then
-                        docker push ${{ secrets.DOCKER_USERNAME }}/algopuni:user-api
-                    fi
-                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-admin-api" ]]; then
-                        docker push ${{ secrets.DOCKER_USERNAME }}/algopuni:admin-api
-                    fi
+                    echo "common-changed : $COMMON_CHANGED"
+                    echo "user-api-changed : $USER_API_CHANGED"
+                    echo "admin-api-changed : $ADMIN_API_CHANGED"
+#
+#            -   name: Get Modified Files
+#                run: |
+#                    BASE_SHA=$(git rev-parse origin/main)
+#                    echo "$BASE_SHA"
+#                    MODIFIED_FILES=$(git diff --name-only $BASE_SHA ${{ github.sha }} | tr '\n' ' ')
+#                    echo "$MODIFIED_FILES"
+#                    echo "MODIFIED_FILES=$MODIFIED_FILES" >> $GITHUB_ENV
+#                    echo "123"
+#
+#            -   name: Build And Test
+#                run: |
+#                    if [[ $(git diff --name-only HEAD^ HEAD) =~ ^module-common/ ]]; then
+#                      echo "common change"
+#                    fi
+#            #                    echo $(git diff --name-only HEAD^ HEAD)
+#            #                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-user-api" ]]; then
+#            #                        cd module-user-api
+#            #                        ./gradlew clean build
+#            #                    fi
+#            #                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-admin-api" ]]; then
+#            #                        cd module-admin-api
+#            #                        ./gradlew clean build
+#            #                    fi
+#
+#            -   name: docker image build
+#                run: |
+#                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-user-api" ]]; then
+#                        docker build -t potatowoong/algopuni:user-api .
+#                    fi
+#                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-admin-api" ]]; then
+#                        docker build -t potatowoong/algopuni:admin-api .
+#                    fi
+#
+#            -   name: docker login
+#                uses: docker/login-action@v2
+#                with:
+#                    username: ${{ secrets.DOCKER_USERNAME }}
+#                    password: ${{ secrets.DOCKER_PASSWORD }}
+#
+#            -   name: docker push
+#                run: |
+#                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-user-api" ]]; then
+#                        docker push ${{ secrets.DOCKER_USERNAME }}/algopuni:user-api
+#                    fi
+#                    if [[ $(git diff --name-only HEAD^ HEAD) =~ "module-admin-api" ]]; then
+#                        docker push ${{ secrets.DOCKER_USERNAME }}/algopuni:admin-api
+#                    fi
