@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class HealthCheckComponent {
 
     public String healthCheck() {
-        log.info("health check!!");
+        log.info("health check!!!");
         return "OK";
     }
 }
