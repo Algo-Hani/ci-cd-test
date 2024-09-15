@@ -115,7 +115,6 @@ jobs:
                     platforms: |
                         linux/amd64
                         linux/arm64
-                        linux/arm/v7
 
             -   name: admin docker build and push
                 uses: docker/build-push-action@v4
@@ -127,7 +126,6 @@ jobs:
                     platforms: |
                         linux/amd64
                         linux/arm64
-                        linux/arm/v7
     #            -   name: docker push
     #                run: |
     #                    if [[ $USER_API_CHANGED == "true" ]]; then
