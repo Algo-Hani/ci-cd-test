@@ -135,8 +135,8 @@ jobs:
                     username: ${{ secrets.AWS_EC2_USERNAME }}
                     key: ${{ secrets.AWS_EC2_SSH_KEY }}
                     script: |
-                        echo "USER_API_CHANGED=${{ needs.build.outputs.user_api_changed }}" >> ~/.bashrc
-                        echo "ADMIN_API_CHANGED=${{ needs.build.outputs.user_api_changed }}" >> ~/.bashrc
+                        export USER_API_CHANGED="${{ needs.build.outputs.user_api_changed }}"
+                        export ADMIN_API_CHANGED="${{ needs.build.outputs.admin_api_changed }}"
                         
                         if [[ "$USER_API_CHANGED" == "true" ]]; then
                             cd /algopuni/user-api
