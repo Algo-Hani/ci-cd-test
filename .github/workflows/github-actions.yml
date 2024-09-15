@@ -109,13 +109,13 @@ jobs:
                 run: |
                     if [[ $USER_API_CHANGED == "true" ]]; then
                         cd module-user-api
-                        docker build --platform linux/amd64 linux/arm64 -t potatowoong/algopuni:user-api --push .
+                        docker build --platform linux/amd64,linux/arm64 -t potatowoong/algopuni:user-api --push .
                     cd ..
                     fi
 
                     if [[ $ADMIN_API_CHANGED == "true" ]]; then
                         cd module-admin-api
-                        docker build --platform linux/amd64 linux/arm64 -t potatowoong/algopuni:admin-api --push .
+                        docker build --platform linux/amd64,linux/arm64 -t potatowoong/algopuni:admin-api --push .
                         cd ..
                     fi
     
