@@ -31,6 +31,16 @@ jobs:
                 with:
                     gradle-version: '8.10'
 
+            -   name: Fetch Base Branch
+                run: git fetch origin +refs/heads/main:refs/remotes/origin/main
+
+            -   name: Get Modified Files
+                run: |
+                    BASE_SHA=$(git rev-parse origin/main)
+                    MODIFIED_FILES=$(git diff --name-only $BASE_SHA ${{ github.sha }} | tr '\n' ' ')
+                    echo "MODIFIED_FILES=$MODIFIED_FILES" >> $GITHUB_ENV
+                    echo $MODIFIED_FILES
+
             -   name: Build And Test
                 run: |
                     if [[ $(git diff --name-only HEAD^ HEAD) =~ ^module-common/ ]]; then
