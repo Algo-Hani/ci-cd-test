@@ -109,7 +109,8 @@ jobs:
                 uses: docker/build-push-action@v4
                 if: steps.echo-changed-files.outputs.user-api-changed == 'true'
                 with:
-                    file: module-user-api/Dockerfile
+                    context: module-user-api
+                    file: Dockerfile
                     push: true
                     tags: potatowoong/algopuni:user-api
                     platforms: |
@@ -120,7 +121,8 @@ jobs:
                 uses: docker/build-push-action@v4
                 if: steps.echo-changed-files.outputs.admin-api-changed == 'true'
                 with:
-                    file: module-admin-api/Dockerfile
+                    context: module-admin-api
+                    file: Dockerfile
                     push: true
                     tags: potatowoong/algopuni:admin-api
                     platforms: |
