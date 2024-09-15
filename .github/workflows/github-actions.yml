@@ -66,15 +66,11 @@ jobs:
             -   name: Build And Test
                 run: |
                     if [[ $USER_API_CHANGED == "true" ]]; then
-                        cd module-user-api
-                        ./gradlew clean build
-                        cd ..
+                        ./gradlew :module-user-api:clean :module-user-api:build
                     fi
                     
                     if [[ $ADMIN_API_CHANGED == "true" ]]; then
-                        cd module-admin-api
-                        ./gradlew clean build
-                        cd ..
+                        ./gradlew :module-admin-api:clean :module-admin-api:build
                     fi
 
             -   name: docker image build
