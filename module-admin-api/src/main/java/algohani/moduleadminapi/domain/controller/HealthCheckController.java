@@ -16,6 +16,6 @@ public class HealthCheckController {
 
     @GetMapping
     public ResponseEntity<String> healthCheck() {
-        return ResponseEntity.ok(healthCheckComponent.healthCheck() + " from admin!!!");
+        return ResponseEntity.ok(healthCheckComponent.healthCheck() + " from admin!!");
     }
 }
