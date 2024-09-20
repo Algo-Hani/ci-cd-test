@@ -81,16 +81,18 @@ tasks.withType(GenerateSwaggerUI).configureEach {
     println("Swagger UI File11111111: ${swaggerUIFile1.absolutePath}")
     if (swaggerUIFile1.exists()) {
         println("Swagger UI File22222222: ${swaggerUIFile1.absolutePath}")
+    } else {
+        println("Swagger UI File33333333: ${swaggerUIFile1.absolutePath}")
     }
     doFirst {
         def swaggerUIFile = file("${openapi3.outputDirectory}/openapi3.yaml")
         println("Swagger UI File: ${swaggerUIFile.absolutePath}")
-        def securitySchemesContent = "  securitySchemes:\n" +                                         \
-                                                                             "    APIKey:\n" +                                         \
-                                                                             "      type: apiKey\n" +                                         \
-                                                                             "      name: Authorization\n" +                                         \
-                                                                             "      in: header\n" +                                        \
-                                                                             "security:\n" +
+        def securitySchemesContent = "  securitySchemes:\n" +                                          \
+                                                                              "    APIKey:\n" +                                          \
+                                                                              "      type: apiKey\n" +                                          \
+                                                                              "      name: Authorization\n" +                                          \
+                                                                              "      in: header\n" +                                         \
+                                                                              "security:\n" +
                 "  - APIKey: []  # Apply the security scheme here"
 
         swaggerUIFile.append securitySchemesContent
