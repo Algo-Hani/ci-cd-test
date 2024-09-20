@@ -68,6 +68,7 @@ jobs:
             -   name: Build And Test
                 run: |
                     if [[ $USER_API_CHANGED == "true" ]]; then
+                        pwd
                         ls 
                         ./gradlew :module-user-api:clean :module-user-api:build -Pprofile=prod
                     fi
