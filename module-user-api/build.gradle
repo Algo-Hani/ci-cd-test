@@ -70,7 +70,8 @@ openapi3 {
     outputDirectory = 'build/resources/main/static/docs'
 
     def swaggerUIFile = file("${openapi3.outputDirectory}/openapi3.yaml")
-    print("Absolute path: ${swaggerUIFile.absolutePath}")
+    println("directory: ${openapi3.outputDirectory}")
+    println("Absolute path: ${swaggerUIFile.absolutePath}")
 }
 
 // SwaggerUI 생성 시 설정 정보
@@ -78,12 +79,12 @@ tasks.withType(GenerateSwaggerUI).configureEach {
     dependsOn 'openapi3'
     doFirst {
         def swaggerUIFile = file("${openapi3.outputDirectory}/openapi3.yaml")
-        def securitySchemesContent = "  securitySchemes:\n" +                      \
-                                                          "    APIKey:\n" +                      \
-                                                          "      type: apiKey\n" +                      \
-                                                          "      name: Authorization\n" +                      \
-                                                          "      in: header\n" +                     \
-                                                          "security:\n" +
+        def securitySchemesContent = "  securitySchemes:\n" +                       \
+                                                           "    APIKey:\n" +                       \
+                                                           "      type: apiKey\n" +                       \
+                                                           "      name: Authorization\n" +                       \
+                                                           "      in: header\n" +                      \
+                                                           "security:\n" +
                 "  - APIKey: []  # Apply the security scheme here"
 
         swaggerUIFile.append securitySchemesContent
