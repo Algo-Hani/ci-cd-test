@@ -70,6 +70,7 @@ jobs:
                     if [[ $USER_API_CHANGED == "true" ]]; then
                         pwd
                         ls 
+                        cat /gradle/wrapper/gradle-wrapper.properties
                         ./gradlew :module-user-api:clean :module-user-api:build -Pprofile=prod
                     fi
                     

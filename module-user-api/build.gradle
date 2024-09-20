@@ -67,7 +67,7 @@ openapi3 {
     description = "Algopuni 123 API"
     version = "1.0.0"
     format = "yaml"
-    outputDirectory = '/build/resources/main/static/docs'
+    outputDirectory = 'build/resources/main/static/docs'
 }
 
 // SwaggerUI 생성 시 설정 정보
@@ -76,12 +76,12 @@ tasks.withType(GenerateSwaggerUI).configureEach {
     doFirst {
         def swaggerUIFile = file("${openapi3.outputDirectory}/openapi3.yaml")
         println("Swagger UI File: ${swaggerUIFile.absolutePath}")
-        def securitySchemesContent = "  securitySchemes:\n" +                                                     \
-                 "    APIKey:\n" +                                                     \
-                 "      type: apiKey\n" +                                                     \
-                 "      name: Authorization\n" +                                                     \
-                 "      in: header\n" +                                                    \
-                 "security:\n" +
+        def securitySchemesContent = "  securitySchemes:\n" +                                                       \
+                   "    APIKey:\n" +                                                       \
+                   "      type: apiKey\n" +                                                       \
+                   "      name: Authorization\n" +                                                       \
+                   "      in: header\n" +                                                      \
+                   "security:\n" +
                 "  - APIKey: []  # Apply the security scheme here"
 
         swaggerUIFile.append securitySchemesContent
