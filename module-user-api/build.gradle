@@ -82,13 +82,14 @@ openapi3 {
 tasks.withType(GenerateSwaggerUI).configureEach {
     dependsOn 'openapi3'
     doFirst {
-        def swaggerUIFile = file("${openapi3.outputDirectory}/openapi3.yaml")
-        def securitySchemesContent = "  securitySchemes:\n" +                          \
-                                                              "    APIKey:\n" +                          \
-                                                              "      type: apiKey\n" +                          \
-                                                              "      name: Authorization\n" +                          \
-                                                              "      in: header\n" +                         \
-                                                              "security:\n" +
+//        def swaggerUIFile = file("${openapi3.outputDirectory}/openapi3.yaml")
+        def swaggerUIFile = file("/module-user-api/${openapi3.outputDirectory}/openapi3.yaml")
+        def securitySchemesContent = "  securitySchemes:\n" +                           \
+                                                               "    APIKey:\n" +                           \
+                                                               "      type: apiKey\n" +                           \
+                                                               "      name: Authorization\n" +                           \
+                                                               "      in: header\n" +                          \
+                                                               "security:\n" +
                 "  - APIKey: []  # Apply the security scheme here"
 
         swaggerUIFile.append securitySchemesContent
