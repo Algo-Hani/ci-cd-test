@@ -54,18 +54,11 @@ test {
 swaggerSources {
     sample {
         setInputFile(file('${project.buildDir}/api-spec/openapi3.yaml'))
-        if (file('${project.buildDir}/api-spec/openapi3.yaml').exists()) {
-            println("Swagger Sources@@@@@@@@: ${project.buildDir}/api-spec/openapi3.yaml")
-        } else {
-            println("Swagger Sources########: ${project.buildDir}/api-spec/openapi3.yaml")
-        }
-        println("Swagger Sources: ${project.buildDir}/api-spec/openapi3.yaml")
     }
 }
 
 // openapi3 스펙 생성 시 설정 정보
 openapi3 {
-    println("openapi3")
     servers = [
             { url = 'http://localhost:8080' },
             { url = 'https://api.user.algopuni.site' }
@@ -74,35 +67,21 @@ openapi3 {
     description = "Algopuni 123 API"
     version = "1.0.0"
     format = "yaml"
-    outputDirectory = 'build/resources/main/static/docs'
-    println("buildDir: ${buildDir}")
+    outputDirectory = '/build/resources/main/static/docs'
 }
 
 // SwaggerUI 생성 시 설정 정보
 tasks.withType(GenerateSwaggerUI).configureEach {
-    println("Generate Swagger UI")
     dependsOn 'openapi3'
-    def swaggerUIFile1 = file("${openapi3.outputDirectory}/openapi3.yaml")
-    println("Swagger UI File11111111: ${swaggerUIFile1.absolutePath}")
-    if (swaggerUIFile1.exists()) {
-        println("Swagger UI File22222222: ${swaggerUIFile1.absolutePath}")
-    } else {
-        println("Swagger UI File33333333: ${swaggerUIFile1.absolutePath}")
-    }
-
-    def testFile = fileTree(dir: "${rootDir}/", include: '**/openapi3.yaml')
-    testFile.each { file ->
-        println("File!!!!!: ${file}")
-    }
     doFirst {
         def swaggerUIFile = file("${openapi3.outputDirectory}/openapi3.yaml")
         println("Swagger UI File: ${swaggerUIFile.absolutePath}")
-        def securitySchemesContent = "  securitySchemes:\n" +                                                  \
-                                                                                      "    APIKey:\n" +                                                  \
-                                                                                      "      type: apiKey\n" +                                                  \
-                                                                                      "      name: Authorization\n" +                                                  \
-                                                                                      "      in: header\n" +                                                 \
-                                                                                      "security:\n" +
+        def securitySchemesContent = "  securitySchemes:\n" +                                                     \
+                 "    APIKey:\n" +                                                     \
+                 "      type: apiKey\n" +                                                     \
+                 "      name: Authorization\n" +                                                     \
+                 "      in: header\n" +                                                    \
+                 "security:\n" +
                 "  - APIKey: []  # Apply the security scheme here"
 
         swaggerUIFile.append securitySchemesContent
@@ -117,7 +96,6 @@ bootJar {
     // bootJar 작업 실행 전 generateSwaggerUISample 작업 실행
     dependsOn generateSwaggerUISample
     from("${generateSwaggerUISample.outputDir}") {
-        println("Swagger UI: ${generateSwaggerUISample.outputDir}")
         into "static/docs"
     }
 }
