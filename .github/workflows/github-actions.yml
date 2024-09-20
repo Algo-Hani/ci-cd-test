@@ -71,6 +71,7 @@ jobs:
                         pwd
                         ls 
                         ls gradle/wrapper
+                        cat gradle/wrapper/gradle-wrapper.properties
                         ./gradlew :module-user-api:clean :module-user-api:build -Pprofile=prod
                     fi
                     
