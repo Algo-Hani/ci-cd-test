@@ -51,7 +51,7 @@ test {
 // 생성된 API 스펙이 어느 위치에 있는지 지정
 swaggerSources {
     sample {
-        setInputFile(file('${project.buildDir}/resources/main/static/docs/openapi3.yaml'))
+        setInputFile(file('${project.buildDir}/api-spec/openapi3.yaml'))
     }
 }
 
@@ -65,8 +65,11 @@ openapi3 {
     description = "Algopuni 사용자 API"
     version = "1.0.0"
     format = "yaml"
-    outputDirectory = project.buildDir.toString() + '/resources/main/static/docs'
-    println("outputDirectory: " + outputDirectory)
+
+    // 개발 환경에서는 build/resources/main/static/docs 디렉토리에 생성
+    if (profile == 'dev') {
+        outputDirectory = 'build/resources/main/static/docs'
+    }
 }
 
 // GenerateSwaggerUI task가 실행되기 전에 openapi3 task를 실행
